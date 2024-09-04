@@ -9,7 +9,7 @@ import { MishnaYomiIndex, mishnaYomiStart } from './mishnaYomi';
 import { NachYomiIndex, nachYomiStart } from './nachYomi';
 import { PirkeiAvotSummerEvent, pirkeiAvot } from './pirkeiAvot';
 import { PsalmsEvent, dailyPsalms } from './psalms';
-import { DailyRambamEvent, dailyRambam1, rambam1Start } from './rambam';
+import { DailyRambamEvent, dailyRambam1, dailyRambam3, rambam1Start } from './rambam';
 import { ShemiratHaLashonEvent, shemiratHaLashon, shemiratHaLashonStart } from './shemiratHaLashon';
 import { TanakhYomiEvent, tanakhYomi, tanakhYomiStart } from './tanakhYomi';
 import { YerushalmiYomiEvent, schottenstein, vilna, yerushalmiYomi } from './yerushalmi';
@@ -79,6 +79,14 @@ DailyLearning.addCalendar('rambam1', function(hd: HDate) {
     return null;
   }
   const reading = dailyRambam1(hd);
+  return new DailyRambamEvent(hd, [reading]);
+});
+
+DailyLearning.addCalendar('rambam3', function(hd: HDate) {
+  if (hd.abs() < rambam1Start) {
+    return null;
+  }
+  const reading = dailyRambam3(hd);
   return new DailyRambamEvent(hd, reading);
 });
 

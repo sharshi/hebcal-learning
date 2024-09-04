@@ -36,3 +36,12 @@ test('tanakhYomi', () => {
   const ev2 = DailyLearning.lookup('tanakhYomi', new HDate(2, 'Elul', 5783));
   expect(ev2).toBeNull();
 });
+
+test('rambamYomi', () => {
+  const hd = new HDate(1, 'Elul', 5784);
+  const ev = DailyLearning.lookup('rambam1', hd);
+  expect(ev.getDesc()).toBe('Daily Offerings and Additional Offerings 8');
+
+  const ev2 = DailyLearning.lookup('rambam3', hd);
+  expect(ev2.render('he')).toBe("הלכות מעשה הקרבנות פרק י׳, הלכות מעשה הקרבנות פרק י״א, הלכות מעשה הקרבנות פרק י״ב");
+});

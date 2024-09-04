@@ -1,4 +1,4 @@
-import {dailyRambam1} from '../src/rambam';
+import {dailyRambam1,dailyRambam3} from '../src/rambam';
 import {greg} from '@hebcal/core';
 import fullCycle from '../src/rambam1cycle.json';
 
@@ -79,4 +79,80 @@ test('rambam1-fullCycle', () => {
     actual[abs2iso(abs)] = `${reading.name} ${reading.perek}`;
   }
   expect(actual).toEqual(fullCycle);
+});
+
+test('rambam3-2024-septemper-4', () => {
+  const date = new Date(2024, 8, 4);
+  const reading = dailyRambam3(date);
+
+  expect(reading.length).toBe(3);
+  expect(reading)
+    .toEqual([
+      { "name": "Sacrificial Procedure", "perek": 10 },
+      { "name": "Sacrificial Procedure", "perek": 11 },
+      { "name": "Sacrificial Procedure", "perek": 12 }]);
+});
+test('rambam3-2023-april-22', () => {
+  const date = new Date(2023, 3, 22);
+  const reading = dailyRambam3(date);
+
+  expect(reading.length).toBe(3);
+
+  expect(reading)
+    .toEqual([
+      { "name": "Kings and Wars", "perek": 10 },
+      { "name": "Kings and Wars", "perek": 11 },
+      { "name": "Kings and Wars", "perek": 12 }]);
+});
+
+test('rambam3-2023-april-23', () => {
+  const date = new Date(2023, 3, 23);
+  const reading = dailyRambam3(date);
+
+  expect(reading.length).toBe(3);
+
+  expect(reading)
+    .toEqual([
+      { "name": "Transmission of the Oral Law", "perek": "1-21" },
+      { "name": "Transmission of the Oral Law", "perek": "22-33" },
+      { "name": "Transmission of the Oral Law", "perek": "34-45" }]);
+});
+
+test('rambam3-2023-april-24', () => {
+  const date = new Date(2023, 3, 24);
+  const reading = dailyRambam3(date);
+
+  expect(reading.length).toBe(3);
+
+  expect(reading)
+    .toEqual([
+      { "name": "Positive Mitzvot", "perek": "1-83" },
+      { "name": "Positive Mitzvot", "perek": "84-166" },
+      { "name": "Positive Mitzvot", "perek": "167-248" }]);
+});
+
+test('rambam3-2023-april-25', () => {
+  const date = new Date(2023, 3, 25);
+  const reading = dailyRambam3(date);
+
+  expect(reading.length).toBe(3);
+
+  expect(reading)
+    .toEqual([
+      { "name": "Negative Mitzvot", "perek": "1-122" },
+      { "name": "Negative Mitzvot", "perek": "123-245" },
+      { "name": "Negative Mitzvot", "perek": "246-365" }]);
+});
+
+test('rambam3-2023-april-26', () => {
+  const date = new Date(2023, 3, 26);
+  const reading = dailyRambam3(date);
+
+  expect(reading.length).toBe(3);
+
+  expect(reading)
+    .toEqual([
+      { "name": "Overview of Mishneh Torah Contents", "perek": "1:1-4:8" },
+      { "name": "Overview of Mishneh Torah Contents", "perek": "5:1-9:9" },
+      { "name": "Overview of Mishneh Torah Contents", "perek": "10:1-14:10" }]);
 });

@@ -143,13 +143,31 @@ export function dailyRambam1(date: HDate | Date | number): RambamReading {
 }
 
 /**
+ * Calculates Daily Rambam (Mishneh Torah) for 3 chapters a day cycle.
+ */
+export function dailyRambam3(date: HDate | Date | number): RambamReading[] {
+  const readings: RambamReading[] = [];
+  const baseDate = getAbsDate(date);
+  const daysSinceStart = baseDate - rambam1Start;
+  const acceleratedDays = daysSinceStart * 3;
+
+  for (let i = 0; i < 3; i++) {
+    const currentDate = rambam1Start + acceleratedDays + i;
+    const reading = dailyRambam1(currentDate);
+    readings.push(reading);
+  }
+
+  return readings;
+}
+
+/**
  * Event wrapper around a Daily Rambam instance
  */
 export class DailyRambamEvent extends Event {
-  reading: RambamReading;
+  reading: RambamReading[];
   category: string;
-  constructor(date: HDate, reading: RambamReading) {
-    super(date, `${reading.name} ${reading.perek}`, flags.DAILY_LEARNING);
+  constructor(date: HDate, reading: RambamReading[]) {
+    super(date, `${reading.map(r => `${r.name} ${r.perek}`).join(', ')}`, flags.DAILY_LEARNING);
     this.reading = reading;
     // this.memo = this.render('memo');
     this.alarm = false;
@@ -164,23 +182,25 @@ export class DailyRambamEvent extends Event {
     if (typeof locale === 'string') {
       locale = locale.toLowerCase();
     }
-    const reading = this.reading;
-    if ((locale === 'he' || locale === 'he-x-nonikud') && typeof reading.perek === 'number') {
-      return Locale.gettext(reading.name, locale) + ' פרק ' +
-        gematriya(reading.perek);
-    }
-    return Locale.gettext(reading.name, locale) + ' ' + reading.perek;
+    const readings = this.reading;
+    const renderedReadings = readings.map(reading => {
+      if ((locale === 'he' || locale === 'he-x-nonikud') && typeof reading.perek === 'number') {
+        return Locale.gettext(reading.name, locale) + ' פרק ' + gematriya(reading.perek);
+      }
+      return Locale.gettext(reading.name, locale) + ' ' + reading.perek;
+    });
+    return renderedReadings.join(', ');
   }
   /**
    * Returns a link to sefaria.org
    */
   url(): string {
     const reading = this.reading;
-    const name = 'Mishneh Torah, ' + reading.name + '.' + reading.perek;
+    const name = 'Mishneh Torah, ' + reading[0].name + '.' + reading[0].perek;
     const urlName = encodeURIComponent(name.replace(/ /g, '_').replace(/:/g, '.'));
     return `https://www.sefaria.org/${urlName}?lang=bi`;
   }
   getCategories(): string[] {
-    return ['dailyRambam1'];
+    return ['dailyRambam1', 'dailyRambam3'];
   }
 }
