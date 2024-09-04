@@ -15,6 +15,7 @@ Supports several learning schedules
   * Schottenstein edition - `yerushalmi-schottenstein`
 * Daily Rambam (Mishneh Torah)
   * 1 chapter a day cycle - `rambam1`
+  * 3 chapters a day cycle - `rambam3`
 * Chofetz Chaim - `chofetzChaim`
 * Sefer Shemirat HaLashon - `shemiratHaLashon`
 * Daf-a-Week
